@@ -22,7 +22,6 @@ import (
 
 func main() {
 	args := os.Args[1:]
-	fmt.Println(args)
 
 	r := mux.NewRouter()
 
@@ -36,9 +35,8 @@ func main() {
 		ms := http.StripPrefix("/media/", http.FileServer(http.Dir("./media")))
 		r.PathPrefix("/media/").Handler(ms)
 		r.PathPrefix("/").Handler(fs)
+		log.Println("Listening on http://localhost:3000")
 	}
-
-	log.Println("Listening on http://localhost:5000")
 	err := http.ListenAndServe(":3000", nil)
 	if err != nil {
 		log.Fatal(err)
