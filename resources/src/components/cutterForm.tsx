@@ -1,6 +1,7 @@
 import React, { useState, useRef } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { toast } from 'react-toastify';
+import { useRegisterSW } from 'virtual:pwa-register/react';
 
 interface CutterFormProps {
   onSubmit: React.FormEventHandler,
@@ -17,6 +18,16 @@ const CutterForm = (props : CutterFormProps) => {
   const allowedExt : String[] = ['mp4', 'webm', 'opgg']
 
   const inputRef = useRef<HTMLInputElement>(null)
+
+  const intervalMS = 60 * 60 * 1000
+
+  const updateServiceWorker = useRegisterSW({
+    onRegistered(r) {
+      r && setInterval(() => {
+        r.update()
+      }, intervalMS)
+    }
+  })
 
   const onChange = (e : React.ChangeEvent<HTMLInputElement>) => {
     const input = e.target
@@ -64,7 +75,7 @@ const CutterForm = (props : CutterFormProps) => {
           }
       </div>
       <div className='flex justify-between mt-3'>
-        <input type="hidden" value={length} name="length" id="length" checked />
+        <input type="hidden" value={length} name="length" id="length" />
         <div
           onClick={() => setLength(10)}
           className={`p-2 font-bold rounded-sm cursor-pointer ${length == 10 ? 'bg-indigo-600 text-white text-lg' : 'bg-gray-200 text-gray-800'}`}
