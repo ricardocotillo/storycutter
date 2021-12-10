@@ -121,7 +121,7 @@ func saveVideo(mf multipart.File, fn string) (string, error) {
 	var buf bytes.Buffer
 	io.Copy(&buf, mf)
 
-	f, err := os.Create("tmp/" + fn)
+	f, err := os.Create("/tmp/" + fn)
 	if err != nil {
 		return "", err
 	}
@@ -132,7 +132,7 @@ func saveVideo(mf multipart.File, fn string) (string, error) {
 		return "", err
 	}
 	buf.Reset()
-	return "tmp/" + fn, nil
+	return f.Name(), nil
 }
 
 func check(e error) {

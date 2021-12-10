@@ -11,6 +11,7 @@ const App = () => {
   const [ data, setData ] = useState<any[] | null>(null)
   const [ loading, setLoading ] = useState(false)
   const [ src, setSrc ] = useState<string | null>(null)
+  const [ split, setSplit ] = useState<boolean>(false)
 
   const onSubmit = async (e : any) => {
     e.preventDefault()
@@ -21,6 +22,7 @@ const App = () => {
       .then(res => {
         setData(res.data)
         setLoading(false)
+        setSplit(true)
         toast.success('Video split successfuly')
       })
       .catch(err => {
@@ -45,13 +47,19 @@ const App = () => {
     }
   }
 
+  const conditionalForm : () => (JSX.Element | undefined) = () => {
+    if(!loading && !split){
+      return <CutterForm onSubmit={onSubmit} onFile={handleFile} />
+    }
+  }
+
   return (
     <div className="flex flex-col justify-center items-stretch h-auto md:h-screen container mx-auto">
-      <CutterForm onSubmit={onSubmit} onFile={handleFile} />
+      { conditionalForm() }
       {loading ?
-        <div className='w-40 h-40 flex justify-center items-center'><FontAwesomeIcon icon='spinner' className='text-3xl text-indigo-500' spin /></div>
+        <div className='w-full h-40 flex justify-center items-center'><FontAwesomeIcon icon='spinner' className='text-3xl text-indigo-500' spin /></div>
         : data && videoWrapper(data.map(s => <Video showBtn src={s} />))}
-      {src && <Video className='w-full md:w-96 mx-auto' src={src} />}
+      {src && !split && <Video className='w-full md:w-96 mx-auto' src={src} />}
       <ToastContainer position="bottom-left" />
     </div>
   );
