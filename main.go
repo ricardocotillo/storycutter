@@ -21,18 +21,22 @@ import (
 )
 
 func main() {
-	fs := http.FileServer(http.Dir("./build"))
-	ms := http.StripPrefix("/media/", http.FileServer(http.Dir("./media")))
+	args := os.Args[1:]
+	fmt.Println(args)
 
 	r := mux.NewRouter()
 
-	r.PathPrefix("/media/").Handler(ms)
-
-	r.HandleFunc("/image/", imageHandler)
+	r.HandleFunc("/video/", imageHandler)
 
 	http.Handle("/", r)
 
-	r.PathPrefix("/").Handler(fs)
+	// serve static and medio on development
+	if len(args) > 0 && args[0] == "--dev" {
+		fs := http.FileServer(http.Dir("./build"))
+		ms := http.StripPrefix("/media/", http.FileServer(http.Dir("./media")))
+		r.PathPrefix("/media/").Handler(ms)
+		r.PathPrefix("/").Handler(fs)
+	}
 
 	log.Println("Listening on http://localhost:5000")
 	err := http.ListenAndServe(":3000", nil)

@@ -58,7 +58,7 @@ const CutterForm = (props : CutterFormProps) => {
   }
 
   return (
-    <form onSubmit={onSubmit} className='p-4' action="/image/" method="post">
+    <form onSubmit={onSubmit} className='p-4' action="/video/" method="post">
       <div className='w-full h-40 border-2 border-dashed border-gray-500 relative'>
         <input ref={inputRef} onChange={onChange} className='w-full h-full opacity-0 cursor-pointer' type="file" name="video" id="video" />
         {loading ? 
