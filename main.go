@@ -124,7 +124,7 @@ func saveVideo(mf multipart.File, fn string) (string, error) {
 	var buf bytes.Buffer
 	io.Copy(&buf, mf)
 
-	f, err := os.Create("/media/" + fn)
+	f, err := os.Create("media/" + fn)
 	if err != nil {
 		return "", err
 	}
