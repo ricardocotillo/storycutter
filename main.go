@@ -135,6 +135,7 @@ func saveVideo(mf multipart.File, fn string) (string, error) {
 		return "", err
 	}
 	buf.Reset()
+	fmt.Println("__________________________________________", f.Name())
 	return f.Name(), nil
 }
 
