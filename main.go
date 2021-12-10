@@ -35,7 +35,7 @@ func main() {
 	r.PathPrefix("/").Handler(fs)
 
 	log.Println("Listening on http://localhost:5000")
-	err := http.ListenAndServe(":5000", nil)
+	err := http.ListenAndServe(":3000", nil)
 	if err != nil {
 		log.Fatal(err)
 	}
