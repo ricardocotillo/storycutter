@@ -1,11 +1,10 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 
-// https://vitejs.dev/config/
 export default defineConfig({
   plugins: [react()],
   build: {
-    watch: {},
+    watch: process.env.MODE === 'watch' ? {} : null,
     outDir: '../build',
     manifest: true,
     emptyOutDir: true,

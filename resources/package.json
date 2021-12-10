@@ -4,6 +4,7 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
+    "watch": "cross-env MODE=watch npm run build",
     "preview": "vite preview"
   },
   "dependencies": {
@@ -18,10 +19,12 @@
     "react-toastify": "^8.1.0"
   },
   "devDependencies": {
+    "@types/node": "^16.11.12",
     "@types/react": "^17.0.33",
     "@types/react-dom": "^17.0.10",
     "@vitejs/plugin-react": "^1.0.7",
     "autoprefixer": "^10.4.0",
+    "cross-env": "^7.0.3",
     "postcss": "^8.4.4",
     "tailwindcss": "^3.0.0",
     "typescript": "^4.4.4",
