@@ -10,13 +10,13 @@ interface CutterFormProps {
 const CutterForm = (props : CutterFormProps) => {
   const { onSubmit, onFile } = props
 
-  const [loading, setLoading] = useState<Boolean>(false)
+  const [ loading, setLoading ] = useState<Boolean>(false)
+
+  const [ length, setLength ] = useState<number>(10)
 
   const allowedExt : String[] = ['mp4', 'webm', 'opgg']
 
   const inputRef = useRef<HTMLInputElement>(null)
-
-  const [file, setFile] = useState<File | null>(null)
 
   const onChange = (e : React.ChangeEvent<HTMLInputElement>) => {
     const input = e.target
@@ -63,10 +63,28 @@ const CutterForm = (props : CutterFormProps) => {
           />
           }
       </div>
-      <div>
-        <input type="radio" value={10} name="length" id="length" checked /><label htmlFor="length"> 10s</label>
+      <div className='flex justify-between mt-3'>
+        <input type="hidden" value={length} name="length" id="length" checked />
+        <div
+          onClick={() => setLength(10)}
+          className={`p-2 font-bold rounded-sm cursor-pointer ${length == 10 ? 'bg-indigo-600 text-white text-lg' : 'bg-gray-200 text-gray-800'}`}
+        >
+          10s
+        </div>
+        <div
+          onClick={() => setLength(15)}
+          className={`p-2 font-bold rounded-sm cursor-pointer ${length == 15 ? 'bg-indigo-600 text-white text-lg' : 'bg-gray-200 text-gray-800'}`}
+        >
+          15s
+        </div>
+        <div
+          onClick={() => setLength(30)}
+          className={`p-2 font-bold rounded-sm cursor-pointer ${length == 30 ? 'bg-indigo-600 text-white text-lg' : 'bg-gray-200 text-gray-800'}`}
+        >
+          30s
+        </div>
       </div>
-      <button className='px-4 py-2 w-full bg-indigo-600 text-white' type="submit">Submit</button>
+      <button className='px-4 py-2 w-full bg-indigo-600 text-white mt-3' type="submit">Submit</button>
     </form>
   )
 }
