@@ -10,17 +10,21 @@ const Loader = () => {
     'Just a few more seconds...',
   ]
 
-  setInterval(() => {
+  const changeSlide = () => {
     const ns = slide === slides.length - 1 ? 0 : slide + 1
     setSlide(ns)
-  }, 6000)
+  }
+
+  setInterval(changeSlide, 6000)
 
   return (
     <div className='fixed inset-0 bg-white overflow-hidden'>
       <SwitchTransition>
         <CSSTransition
           key={slide}
-          timeout={300}
+          addEndListener={(node, done) => {
+            node.addEventListener("transitionend", done, false)
+          }}
           classNames={{
             appear: 'translate-x-full',
             appearActive: 'translate-x-full',
