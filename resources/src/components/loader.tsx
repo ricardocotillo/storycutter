@@ -15,7 +15,7 @@ const Loader = () => {
     setSlide(ns)
   }
 
-  setInterval(changeSlide, 6000)
+  setTimeout(changeSlide, 6000)
 
   return (
     <div className='fixed inset-0 bg-white overflow-hidden'>
