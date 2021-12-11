@@ -5,11 +5,10 @@ import { toast } from 'react-toastify';
 
 interface CutterFormProps {
   onSubmit: React.FormEventHandler,
-  disabled: boolean,
 }
 
 const CutterForm = (props : CutterFormProps) => {
-  const { onSubmit, disabled } = props
+  const { onSubmit } = props
 
   const [ loading, setLoading ] = useState<boolean>(false)
 
@@ -106,8 +105,8 @@ const CutterForm = (props : CutterFormProps) => {
           30s
         </div>
       </div>
-      <button className={`px-4 py-2 w-full rounded-sm text-white mt-3 ${disabled ? 'bg-indigo-300' : 'bg-indigo-600'}`} disabled={disabled} type="submit">Submit</button>
-      <button className={`px-4 py-2 w-full rounded-sm text-white mt-3 ${disabled ? 'bg-orange-300' : 'bg-orange-500'}`} disabled={disabled} type="reset">Reset</button>
+      <button className='px-4 py-2 w-full rounded-sm text-white mt-3 bg-indigo-600' type="submit">Submit</button>
+      <button className='px-4 py-2 w-full rounded-sm text-white mt-3 bg-orange-500' type="reset">Reset</button>
     </form>
   )
 }
