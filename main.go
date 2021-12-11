@@ -49,7 +49,6 @@ func imageHandler(w http.ResponseWriter, r *http.Request) {
 	l := r.Form.Get("length")
 
 	file, header, err := r.FormFile("video")
-	fmt.Println("holaaaa")
 	check(err)
 	defer file.Close()
 
@@ -135,7 +134,6 @@ func saveVideo(mf multipart.File, fn string) (string, error) {
 		return "", err
 	}
 	buf.Reset()
-	fmt.Println("__________________________________________", f.Name())
 	return f.Name(), nil
 }
 
