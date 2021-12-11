@@ -1,7 +1,6 @@
 package router
 
 import (
-	"log"
 	"net/http"
 	"os"
 
@@ -20,7 +19,6 @@ func GetRoutes() *mux.Router {
 		ms := http.StripPrefix("/media/", http.FileServer(http.Dir("./media")))
 		r.PathPrefix("/media/").Handler(ms)
 		r.PathPrefix("/").Handler(fs)
-		log.Println("Listening on http://localhost:3000")
 	}
 	return r
 }
