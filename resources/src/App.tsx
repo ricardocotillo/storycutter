@@ -5,12 +5,12 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import axios from 'axios'
+import { useRegisterSW } from 'virtual:pwa-register/react';
 
 const App = () => {
 
   const [ data, setData ] = useState<any[] | null>(null)
   const [ loading, setLoading ] = useState(false)
-  const [ src, setSrc ] = useState<string | null>(null)
   const [ split, setSplit ] = useState<boolean>(false)
 
   const onSubmit = async (e : any) => {
@@ -18,17 +18,18 @@ const App = () => {
     setLoading(true)
     const form = new FormData(e.target)
     const url = e.target.getAttribute('action')
-    axios.post(url, form)
-      .then(res => {
-        setData(res.data)
-        setLoading(false)
-        setSplit(true)
-        toast.success('Video split successfuly')
-      })
-      .catch(err => {
-        toast.error(err.response.data.error)
-        setLoading(false)
-      })
+    progress()
+    // axios.post(url, form)
+    //   .then(res => {
+    //     setData(res.data)
+    //     setLoading(false)
+    //     setSplit(true)
+    //     toast.success('Video split successfuly')
+    //   })
+    //   .catch(err => {
+    //     toast.error(err.response.data.error)
+    //     setLoading(false)
+    //   })
   }
 
   const videoWrapper = (videos : JSX.Element[]) => {
@@ -39,27 +40,33 @@ const App = () => {
     )
   }
 
-  const handleFile : (file: File) => void = (file : File) => {
-    const reader = new FileReader()
-    reader.readAsDataURL(file)
-    reader.onload = () => {
-      setSrc(reader.result as string)
-    }
-  }
+  const intervalMS = 60 * 60 * 1000
 
-  const conditionalForm : () => (JSX.Element | undefined) = () => {
-    if(!loading && !split){
-      return <CutterForm onSubmit={onSubmit} onFile={handleFile} />
+  const updateServiceWorker = useRegisterSW({
+    onRegistered(r) {
+      r && setInterval(() => {
+        r.update()
+      }, intervalMS)
+    }
+  })
+
+  const progress = (toastId: React.ReactText | null = null) => {
+    if (toastId) {
+      toast.update(toastId, {
+        render: 'This is taking longer than expected'
+      })
+    } else {
+      const id = toast.loading('This will take just a moment')
+      setTimeout(() => progress(id), 6000)
     }
   }
 
   return (
-    <div className="flex flex-col justify-center items-stretch h-auto md:h-screen container mx-auto">
-      { conditionalForm() }
-      {loading ?
-        <div className='w-full h-40 flex justify-center items-center'><FontAwesomeIcon icon='spinner' className='text-3xl text-indigo-500' spin /></div>
-        : data && videoWrapper(data.map(s => <Video showBtn src={s} />))}
-      {src && !split && <Video className='w-full md:w-96 mx-auto' src={src} />}
+    <div className="container mx-auto pt-4">
+      <h1 className='font-bold text-2xl text-center'>STORY <span className='text-gray-400'>CUTTER</span></h1>
+      <p className='text-center mt-4 text-sm text-gray-400 px-2'>Cut your long videos into beautiful stories, share on Instagram, WhatsApp, Facebook, Snapchat and more!</p>
+      <CutterForm onSubmit={onSubmit} disabled={loading} />
+      { data && videoWrapper(data.map(s => <Video showBtn src={s} />)) }
       <ToastContainer position="bottom-left" />
     </div>
   );
