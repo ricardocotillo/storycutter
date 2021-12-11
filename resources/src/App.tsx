@@ -10,7 +10,7 @@ import { useRegisterSW } from 'virtual:pwa-register/react'
 const App = () => {
 
   const [ data, setData ] = useState<any[] | null>(null)
-  const [ loading, setLoading ] = useState<boolean>(true)
+  const [ loading, setLoading ] = useState<boolean>(false)
 
   const onSubmit = async (e : any) => {
     e.preventDefault()
