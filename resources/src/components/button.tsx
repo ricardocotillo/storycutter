@@ -24,6 +24,8 @@ const Button = (props: ButtonProps) => {
 
   const buttonRef = useRef<HTMLButtonElement>(null)
 
+  const spanRef = useRef<HTMLSpanElement>(null)
+
   const handleClick : React.MouseEventHandler<HTMLButtonElement> = e => {
     const btn = buttonRef.current
     if (btn) {
@@ -47,13 +49,15 @@ const Button = (props: ButtonProps) => {
     <button ref={buttonRef} onClick={handleClick} className={`px-4 py-2 rounded-sm relative overflow-hidden ${className}`} type={type}>
       { children }
       <CSSTransition
+        nodeRef={spanRef}
         in={clicked}
         timeout={300}
         onEntered={() => setClicked(false)}
+        unmountOnExit={true}
         classNames={{
           appear: 'scale-0 opacity-30',
-          appearActive: 'scale-0 opacity-30',
-          appearDone: 'scale-0 opacity-30',
+          appearActive: 'scale-0 opacity-0',
+          appearDone: 'scale-0 opacity-0',
           enter: 'scale-0 opacity-30',
           enterActive: 'scale-4 opacity-0 transition-all duration-300',
           enterDone: 'scale-0 opacity-0',
@@ -62,7 +66,7 @@ const Button = (props: ButtonProps) => {
           exitDone: 'scale-0 opacity-0',
         }}
       >
-        <span className='absolute rounded-full bg-white opacity-0' style={rippleStyle}></span>
+        <span ref={spanRef} className='absolute rounded-full bg-white' style={rippleStyle}></span>
       </CSSTransition>
     </button>
   )
