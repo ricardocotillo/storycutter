@@ -5,7 +5,11 @@ module.exports = {
   ],
   darkMode: 'media',
   theme: {
-    extend: {},
+    extend: {
+      scale: {
+        '4': '4'
+      }
+    },
   },
   variants: {
     extend: {},

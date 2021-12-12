@@ -6,18 +6,20 @@ import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import axios from 'axios'
 import { useRegisterSW } from 'virtual:pwa-register/react'
+import Button from './components/button'
 
 const App = () => {
 
   const [ data, setData ] = useState<any[] | null>(null)
   const [ loading, setLoading ] = useState<boolean>(false)
 
-  const onSubmit = async (e : any) => {
+  const onSubmit : React.FormEventHandler<HTMLFormElement> = async e => {
     e.preventDefault()
-    setLoading(true)
-    const form = new FormData(e.target)
-    const url = e.target.getAttribute('action')
-    axios.post(url, form)
+    const form = new FormData(e.currentTarget)
+    const url = e.currentTarget.getAttribute('action')
+    if (url && e.currentTarget.video.value) {
+      setLoading(true)
+      axios.post(url, form)
       .then(res => {
         setData(res.data)
         setLoading(false)
@@ -27,6 +29,9 @@ const App = () => {
         toast.error(err.response.data.error)
         setLoading(false)
       })
+    } else {
+      toast.info('Please, upload a video')
+    }
   }
 
   const videoWrapper = (videos : JSX.Element[]) => {
