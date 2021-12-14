@@ -1,49 +1,18 @@
-import React, { useRef, useState } from 'react'
+import React from 'react'
 import { CSSTransition } from 'react-transition-group'
+import useButtonData from '../common/utils'
 
-interface ButtonProps {
+type ButtonProps = {
   className?: string
   type?: 'button' | 'submit' | 'reset'
   children?: React.ReactNode
   onClick?: React.MouseEventHandler<HTMLButtonElement>
 }
 
-interface RippleStyle {
-  width?: string
-  height?: string
-  left?: string
-  top?: string
-}
-
 const Button = (props: ButtonProps) => {
   const { className, type, children, onClick } = props
 
-  const [ clicked, setClicked ] = useState<boolean>(false)
-
-  const [ rippleStyle, setRippleStyle ] = useState<RippleStyle>({})
-
-  const buttonRef = useRef<HTMLButtonElement>(null)
-
-  const spanRef = useRef<HTMLSpanElement>(null)
-
-  const handleClick : React.MouseEventHandler<HTMLButtonElement> = e => {
-    const btn = buttonRef.current
-    if (btn) {
-      const diameter = Math.max(btn.clientWidth, btn.clientHeight)
-      const radius = diameter / 2
-      const style = {
-        width: `${diameter}px`,
-        height: `${diameter}px`,
-        left: `${e.clientX - (btn.offsetLeft + radius)}px`,
-        top: `${e.clientY - (btn.offsetTop + radius)}px`
-      }
-      setRippleStyle(style)
-    }
-    setClicked(true)
-    if (onClick) {
-      onClick(e)
-    }
-  }
+  const { clicked, rippleStyle, buttonRef, spanRef, setClicked, handleClick } = useButtonData(onClick)
 
   return (
     <button ref={buttonRef} onClick={handleClick} className={`px-4 py-2 rounded-sm relative overflow-hidden ${className}`} type={type}>
@@ -55,10 +24,10 @@ const Button = (props: ButtonProps) => {
         onEntered={() => setClicked(false)}
         unmountOnExit={true}
         classNames={{
-          appear: 'scale-0 opacity-30',
+          appear: 'scale-0 opacity-20',
           appearActive: 'scale-0 opacity-0',
           appearDone: 'scale-0 opacity-0',
-          enter: 'scale-0 opacity-30',
+          enter: 'scale-0 opacity-20',
           enterActive: 'scale-4 opacity-0 transition-all duration-300',
           enterDone: 'scale-0 opacity-0',
           exit: 'scale-0 opacity-0',

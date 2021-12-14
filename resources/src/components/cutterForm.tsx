@@ -71,7 +71,8 @@ const CutterForm = (props : CutterFormProps) => {
     <form ref={formRef} onSubmit={onSubmit} onReset={onReset} className='p-4' action="/video/" method="post">
       <div className={`w-full h-40 border-2 border-dashed border-gray-500 relative ${src && 'hidden'}`}>
         <input ref={inputRef} onChange={onChange} className='w-full h-full opacity-0 cursor-pointer' type="file" name="video" id="video" />
-        {loading ? 
+        {
+          loading ? 
           <FontAwesomeIcon
             icon='spinner'
             className='absolute left-1/2 top-1/2 text-4xl text-indigo-500 -translate-x-1/2 -translate-y-1/2'
@@ -82,7 +83,7 @@ const CutterForm = (props : CutterFormProps) => {
             icon='upload'
             className='absolute left-1/2 top-1/2 text-4xl text-gray-500 cursor-pointer -translate-x-1/2 -translate-y-1/2'
           />
-          }
+        }
       </div>
       {src && <Video className='w-full md:w-96 mx-auto mb-3' src={src} />}
       <div className={`flex justify-between mt-3`}>

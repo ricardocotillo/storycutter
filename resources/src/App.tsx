@@ -6,7 +6,6 @@ import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import axios from 'axios'
 import { useRegisterSW } from 'virtual:pwa-register/react'
-import Button from './components/button'
 
 const App = () => {
 
