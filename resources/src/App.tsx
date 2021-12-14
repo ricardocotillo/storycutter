@@ -6,6 +6,7 @@ import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import axios from 'axios'
 import { useRegisterSW } from 'virtual:pwa-register/react'
+import Appbar from './components/appbar'
 
 const App = () => {
 
@@ -43,7 +44,7 @@ const App = () => {
 
   const intervalMS = 60 * 60 * 1000
 
-  const updateServiceWorker = useRegisterSW({
+  useRegisterSW({
     onRegistered(r) {
       r && setInterval(() => {
         r.update()
@@ -52,14 +53,17 @@ const App = () => {
   })
 
   return (
-    <div className="container mx-auto pt-4">
-      <h1 className='font-bold text-2xl text-center'>STORY <span className='text-gray-400'>CUTTER</span></h1>
-      <p className='text-center mt-4 text-sm text-gray-400 px-2'>Cut your long videos into beautiful stories, share on Instagram, WhatsApp, Facebook, Snapchat and more!</p>
-      <CutterForm onSubmit={onSubmit} />
-      { data && videoWrapper(data.map(s => <Video showBtn src={s} />)) }
-      <ToastContainer position="bottom-left" />
-      { loading && <Loader /> }
-    </div>
+    <React.Fragment>
+      <Appbar />
+      <div className="container mx-auto pt-4">
+        <h1 className='font-bold text-2xl text-center'>STORY <span className='text-gray-400'>CUTTER</span></h1>
+        <p className='text-center mt-4 text-sm text-gray-400 px-2'>Cut your long videos into beautiful stories, share on Instagram, WhatsApp, Facebook, Snapchat and more!</p>
+        <CutterForm onSubmit={onSubmit} />
+        { data && videoWrapper(data.map(s => <Video showBtn src={s} />)) }
+        <ToastContainer position="bottom-left" />
+        { loading && <Loader /> }
+      </div>
+    </React.Fragment>
   );
 }
 
