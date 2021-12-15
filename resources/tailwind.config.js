@@ -8,6 +8,9 @@ module.exports = {
     extend: {
       scale: {
         '4': '4'
+      },
+      height: {
+        'screen-1/2': '50vh'
       }
     },
   },
