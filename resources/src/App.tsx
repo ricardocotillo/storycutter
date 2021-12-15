@@ -81,7 +81,7 @@ const App = () => {
           <div className='h-full flex flex-col justify-around'>
             <div className='text-center'>
               <FontAwesomeIcon icon='upload' className='text-indigo-500 text-4xl' />
-              <p className='text-sm text-gray-400'>upload the video you can to split</p>
+              <p className='text-sm text-gray-400'>Upload the video you can to split</p>
             </div>
             <div className='text-center'>
               <FontAwesomeIcon icon='ruler-horizontal' className='text-amber-500 text-4xl' />
