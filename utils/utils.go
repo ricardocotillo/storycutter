@@ -42,7 +42,7 @@ func SplitVideo(v *cinema.Video, l int, fn string) ([]string, error) {
 
 		defer sf.Close()
 
-		err = v.Render(sf.Name())
+		err = v.RenderWithStreams(sf.Name(), os.Stdout, os.Stderr)
 
 		if err != nil {
 			return nil, err
