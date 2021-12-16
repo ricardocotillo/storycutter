@@ -72,30 +72,30 @@ const App = () => {
         <p className='text-center mt-4 text-sm text-gray-400 px-2'>Cut your long videos into beautiful stories, share on Instagram, WhatsApp, Facebook, Snapchat and more!</p>
         <CutterForm onSubmit={onSubmit} />
         { data && videoWrapper(data.map(s => <Video showBtn src={s} />)) }
-        <Modal
-          type='fullscreen'
-          open={openModal}
-          onClose={closeModal}
-          className='bg-white border-t border-gray-200'
-        >
-          <div className='h-full flex flex-col justify-around'>
-            <div className='text-center'>
-              <FontAwesomeIcon icon='upload' className='text-indigo-500 text-4xl' />
-              <p className='text-sm text-gray-400'>Upload the video you can to split</p>
-            </div>
-            <div className='text-center'>
-              <FontAwesomeIcon icon='ruler-horizontal' className='text-amber-500 text-4xl' />
-              <p className='text-sm text-gray-400'>Choose the length of the resulting clips</p>
-            </div>
-            <div className='text-center'>
-              <FontAwesomeIcon icon='download' className='text-green-500 text-4xl' />
-              <p className='text-sm text-gray-400'>Download your newly cut clips</p>
-            </div>
-          </div>
-        </Modal>
-        <ToastContainer position="bottom-left" />
-        { loading && <Loader /> }
       </div>
+      <Modal
+        type='fullscreen'
+        open={openModal}
+        onClose={closeModal}
+        className='bg-white border-t border-gray-200'
+      >
+        <div className='h-full flex flex-col justify-around'>
+          <div className='text-center'>
+            <FontAwesomeIcon icon='upload' className='text-indigo-500 text-4xl' />
+            <p className='text-sm text-gray-400'>Upload the video you can to split</p>
+          </div>
+          <div className='text-center'>
+            <FontAwesomeIcon icon='ruler-horizontal' className='text-amber-500 text-4xl' />
+            <p className='text-sm text-gray-400'>Choose the length of the resulting clips</p>
+          </div>
+          <div className='text-center'>
+            <FontAwesomeIcon icon='download' className='text-green-500 text-4xl' />
+            <p className='text-sm text-gray-400'>Download your newly cut clips</p>
+          </div>
+        </div>
+      </Modal>
+      { loading && <Loader /> }
+      <ToastContainer position="bottom-left" />
     </React.Fragment>
   );
 }
